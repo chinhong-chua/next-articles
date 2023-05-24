@@ -17,7 +17,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
             <button className="inline-flex items-center px-3 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-gray-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:border-indigo-300 focus:shadow-outline-indigo active:bg-indigo-300 transition ease-in-out duration-150">
               Manage Blog <span className="ml-1 text-xs">{">"}</span>
             </button>
-            <div className="absolute left-0 w-56 mt-2 origin-top-right rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition ease-in-out duration-150">
+            <div className="absolute left-0 w-56 mt-2 origin-top-right rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition ease-in-out duration-150 z-50" >
               <div className="rounded-md bg-white shadow-xs divide-y divide-gray-100 focus:outline-none">
                 <div className="py-1">
                   <a
