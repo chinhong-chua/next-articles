@@ -12,7 +12,7 @@ const CreateBlog = () => {
   const [description, setDescription] = useState("");
   const [content, setContent] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Perform the submit logic, such as sending the data to the server
     console.log("Title:", title);
@@ -38,9 +38,8 @@ const CreateBlog = () => {
           <label className="block mb-1 font-medium">Date:</label>
           <DatePicker
             selected={date}
-            onChange={(d :Date)=>setDate(d)}
+            onChange={(d: Date) => setDate(d)}
             dateFormat="dd/MM/yyyy"
-
             className="w-full px-4 py-2 border rounded"
           />
         </div>
@@ -55,13 +54,14 @@ const CreateBlog = () => {
         </div>
         <div className="mb-4  max-h-full">
           <label className="block mb-1 font-medium">Content:</label>
-          <div className="bg-slate-50 h-full overflow-y-auto w-full" style={{ minHeight: '200px' }}
->
+          <div
+            className="bg-slate-50 h-full overflow-y-auto w-full"
+            style={{ minHeight: "200px" }}
+          >
             <ReactQuill
               value={content}
               onChange={setContent}
               className=" min-h-full"
-              
             />
           </div>
         </div>
