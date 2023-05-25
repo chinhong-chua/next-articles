@@ -1,8 +1,39 @@
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { FunctionComponent } from "react";
 
 interface NavbarProps {}
 
 const Navbar: FunctionComponent<NavbarProps> = () => {
+  const { asPath } = useRouter();
+  // bg-indigo-100
+  const pathName = `/${asPath.split("/")[1]}`;
+  const linkClass = (hrefPath: string) => {
+    return `mr-5 hover:text-gray-900 px-3 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-gray-700 hover:bg-indigo-200 ${
+      pathName === hrefPath && "bg-indigo-100"
+    }`;
+  };
+  console.log(asPath.split("/")[1]);
+
+  const leftNavigations = [
+    {
+      name: "Home",
+      route: "/",
+    },
+    {
+      name: "About Us",
+      route: "/about",
+    },
+    {
+      name: "Articles",
+      route: "/articles",
+    },
+    {
+      name: "Blogs",
+      route: "/blogs",
+    },
+  ];
+
   return (
     <header className="text-gray-600 body-font">
       <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center justify-between">
@@ -10,14 +41,22 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
           <span className="ml-3 text-xl">MyBlog</span>
         </div>
         <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center">
-          <a className="mr-5 hover:text-gray-900">Home</a>
-          <a className="mr-5 hover:text-gray-900">Articles</a>
-          <a className="mr-5 hover:text-gray-900">Blogs</a>
+          {leftNavigations.map((item) => (
+            <Link
+              className={`mr-5 hover:text-gray-900 px-3 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-gray-700 hover:bg-indigo-200 ${
+                pathName === item.route && "bg-indigo-100"
+              }`}
+              href={item.route}
+            >
+              {item.name}
+            </Link>
+          ))}
+
           <div className="relative group inline-block">
-            <button className="inline-flex items-center px-3 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-gray-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:border-indigo-300 focus:shadow-outline-indigo active:bg-indigo-300 transition ease-in-out duration-150">
+            <button className="inline-flex items-center px-3 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-gray-700 hover:bg-indigo-200 focus:outline-none focus:border-indigo-300 focus:shadow-outline-indigo active:bg-indigo-300 transition ease-in-out duration-150">
               Manage Blog <span className="ml-1 text-xs">{">"}</span>
             </button>
-            <div className="absolute left-0 w-56 mt-2 origin-top-right rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition ease-in-out duration-150 z-50" >
+            <div className="absolute left-0 w-56 mt-2 origin-top-right rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition ease-in-out duration-150 z-50">
               <div className="rounded-md bg-white shadow-xs divide-y divide-gray-100 focus:outline-none">
                 <div className="py-1">
                   <a
