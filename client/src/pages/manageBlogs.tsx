@@ -1,3 +1,5 @@
+import { FunctionComponent } from "react";
+
 interface ManageBlogsProps {}
 
 const ManageBlogs: FunctionComponent<ManageBlogsProps> = () => {

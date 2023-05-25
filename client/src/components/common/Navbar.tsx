@@ -43,6 +43,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
         <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center">
           {leftNavigations.map((item) => (
             <Link
+              key={item.name}
               className={`mr-5 hover:text-gray-900 px-3 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-gray-700 hover:bg-indigo-200 ${
                 pathName === item.route && "bg-indigo-100"
               }`}
