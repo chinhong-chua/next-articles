@@ -1,9 +1,7 @@
-interface ManageBlogsProps {
-    
-}
- 
+interface ManageBlogsProps {}
+
 const ManageBlogs: FunctionComponent<ManageBlogsProps> = () => {
-    return (  );
-}
- 
+  return <>Manage blogs</>;
+};
+
 export default ManageBlogs;
