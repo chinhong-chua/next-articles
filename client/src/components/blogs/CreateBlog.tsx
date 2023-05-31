@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import DatePicker from "react-datepicker";
@@ -10,6 +10,7 @@ const CreateBlog = () => {
   const [title, setTitle] = useState("");
   const [date, setDate] = useState(new Date());
   const [description, setDescription] = useState("");
+  const [image, setImage] = useState<FileList | null>(null);
   const [content, setContent] = useState("");
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -20,6 +21,10 @@ const CreateBlog = () => {
     console.log("Description:", description);
     console.log("Content:", content);
   };
+
+  useEffect(() => {
+    console.log(image);
+  }, [image]);
 
   return (
     <div className="container mx-auto p-4">
@@ -52,6 +57,20 @@ const CreateBlog = () => {
             className="w-full px-4 py-2 border rounded"
           />
         </div>
+        <div className="mb-4">
+          <label className="block mb-1 font-medium">Image:</label>
+          <input
+            type="file"
+            name="myImage"
+            onChange={(e) => setImage(e.target.files)}
+            className="w-full px-4 py-2 border rounded"
+          />
+        </div>
+        <div>
+          <label htmlFor="myImage">Preview:</label>
+          {/* <img src={image?.[0]} alt="myImage" /> */}
+          <p>{image?.[0]?.name || ""}</p>
+        </div>
         <div className="mb-4  max-h-full">
           <label className="block mb-1 font-medium">Content:</label>
           <div
@@ -61,7 +80,7 @@ const CreateBlog = () => {
             <ReactQuill
               value={content}
               onChange={setContent}
-              className=" min-h-full"
+              className=" min-h-full border-blue-300"
             />
           </div>
         </div>
