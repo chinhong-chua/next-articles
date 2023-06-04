@@ -1,89 +1,105 @@
-import { FunctionComponent, useState } from "react";
+import Link from "next/link";
+import { FunctionComponent, useEffect, useState } from "react";
 
 interface Blog {
-  id: number;
+  slug: string;
   title: string;
   author: string;
-  date: string;
-  image: string;
-  excerpt: string;
+  date: Date;
+  imagePath: string;
+  content: string;
   minutesRead: number;
 }
 
 interface BlogsProps {}
 
 const Blogs: FunctionComponent<BlogsProps> = () => {
-  const initialBlogList: Blog[] = [
-    // Initial three blogs
-    {
-      id: 1,
-      title: "The Power of Content Marketing",
-      author: "John Doe",
-      date: "May 15, 2023",
-      image: "https://picsum.photos/seed/picsum/500",
-      excerpt:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sed leo quis velit rutrum commodo.",
-      minutesRead: 8,
-    },
-    {
-      id: 2,
-      title: "Mastering the Art of Productivity",
-      author: "Jane Smith",
-      date: "May 18, 2023",
-      image: "https://picsum.photos/seed/picsum/500",
-      excerpt:
-        "Etiam auctor mauris a dui consectetur, a semper ligula consectetur. Phasellus dignissim mauris ac nisl tristique, in condimentum lectus interdum.",
-      minutesRead: 10,
-    },
-    {
-      id: 3,
-      title: "Title 3",
-      author: "Author 3",
-      date: "Date 3",
-      image: "https://picsum.photos/seed/picsum/500",
-      excerpt: "Excerpt 3",
-      minutesRead: 5,
-    },
-    // Add more blogs as needed
-    {
-      id: 4,
-      title: "Title 3",
-      author: "Author 3",
-      date: "Date 3",
-      image: "https://picsum.photos/seed/picsum/500",
-      excerpt: "Excerpt 3",
-      minutesRead: 5,
-    },
-    {
-      id: 5,
-      title: "Title 3",
-      author: "Author 3",
-      date: "Date 3",
-      image: "https://picsum.photos/seed/picsum/500",
-      excerpt: "Excerpt 3",
-      minutesRead: 5,
-    },
-    {
-      id: 6,
-      title: "Title 3",
-      author: "Author 3",
-      date: "Date 3",
-      image: "https://picsum.photos/seed/picsum/500",
-      excerpt: "Excerpt 3",
-      minutesRead: 5,
-    },
-    {
-      id: 7,
-      title: "Title 3",
-      author: "Author 3",
-      date: "Date 3",
-      image: "https://picsum.photos/seed/picsum/500",
-      excerpt: "Excerpt 3",
-      minutesRead: 5,
-    },
-  ];
+  // const initialBlogList: Blog[] = [
+  //   // Initial three blogs
+  //   {
+  //     id: 1,
+  //     title: "The Power of Content Marketing",
+  //     author: "John Doe",
+  //     date: "May 15, 2023",
+  //     image: "https://picsum.photos/seed/picsum/500",
+  //     excerpt:
+  //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sed leo quis velit rutrum commodo.",
+  //     minutesRead: 8,
+  //   },
+  //   {
+  //     id: 2,
+  //     title: "Mastering the Art of Productivity",
+  //     author: "Jane Smith",
+  //     date: "May 18, 2023",
+  //     image: "https://picsum.photos/seed/picsum/500",
+  //     excerpt:
+  //       "Etiam auctor mauris a dui consectetur, a semper ligula consectetur. Phasellus dignissim mauris ac nisl tristique, in condimentum lectus interdum.",
+  //     minutesRead: 10,
+  //   },
+  //   {
+  //     id: 3,
+  //     title: "Title 3",
+  //     author: "Author 3",
+  //     date: "Date 3",
+  //     image: "https://picsum.photos/seed/picsum/500",
+  //     excerpt: "Excerpt 3",
+  //     minutesRead: 5,
+  //   },
+  //   // Add more blogs as needed
+  //   {
+  //     id: 4,
+  //     title: "Title 3",
+  //     author: "Author 3",
+  //     date: "Date 3",
+  //     image: "https://picsum.photos/seed/picsum/500",
+  //     excerpt: "Excerpt 3",
+  //     minutesRead: 5,
+  //   },
+  //   {
+  //     id: 5,
+  //     title: "Title 3",
+  //     author: "Author 3",
+  //     date: "Date 3",
+  //     image: "https://picsum.photos/seed/picsum/500",
+  //     excerpt: "Excerpt 3",
+  //     minutesRead: 5,
+  //   },
+  //   {
+  //     id: 6,
+  //     title: "Title 3",
+  //     author: "Author 3",
+  //     date: "Date 3",
+  //     image: "https://picsum.photos/seed/picsum/500",
+  //     excerpt: "Excerpt 3",
+  //     minutesRead: 5,
+  //   },
+  //   {
+  //     id: 7,
+  //     title: "Title 3",
+  //     author: "Author 3",
+  //     date: "Date 3",
+  //     image: "https://picsum.photos/seed/picsum/500",
+  //     excerpt: "Excerpt 3",
+  //     minutesRead: 5,
+  //   },
+  // ];
 
-  const [blogList, setBlogList] = useState<Blog[]>(initialBlogList);
+  const [blogList, setBlogList] = useState<Blog[]>([]);
+
+  useEffect(() => {
+    const fetchAllBlogs = async () => {
+      const res = await fetch("http://localhost:8011/api/blogs");
+      if (!res.ok) {
+        throw new Error("Failed to fetch blogs");
+      }
+      const data: any = await res.json();
+      console.log("json ", JSON.stringify(data, null, 4));
+
+      setBlogList(data);
+    };
+    fetchAllBlogs();
+  }, []);
+
   const [visibleBlogs, setVisibleBlogs] = useState<number>(3);
 
   const loadMoreBlogs = () => {
@@ -113,11 +129,11 @@ const Blogs: FunctionComponent<BlogsProps> = () => {
         {paginatedBlogs.map((blog) => (
           // Render the blogs
           <div
-            key={blog.id}
+            key={blog.slug}
             className="relative bg-gray-900 rounded-md overflow-hidden"
           >
             <img
-              src={blog.image}
+              src={blog.imagePath}
               alt={blog.title}
               className="w-full h-full object-cover blur-sm"
             />
@@ -129,14 +145,17 @@ const Blogs: FunctionComponent<BlogsProps> = () => {
                 <div className="flex items-center text-gray-300 text-sm mb-2">
                   <span>{blog.author}</span>
                   <span className="mx-2">&bull;</span>
-                  <span>{blog.date}</span>
+                  <span>{blog.date?.toString()}</span>
                   <span className="mx-2">&bull;</span>
                   <span>{blog.minutesRead} min read</span>
                 </div>
-                <p className="text-gray-300 mb-4">{blog.excerpt}</p>
-                <button className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded">
+                <p className="text-gray-300 mb-4">{blog.content}</p>
+                <Link
+                  className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded"
+                  href={`/blogs/${blog.slug}`}
+                >
                   Read More
-                </button>
+                </Link>
               </div>
             </div>
           </div>
@@ -148,7 +167,7 @@ const Blogs: FunctionComponent<BlogsProps> = () => {
           <ul className="pagination flex">
             {Array.from({ length: totalPages }).map((_, index) => (
               <li
-              onClick={() => handlePageChange(index + 1)}
+                onClick={() => handlePageChange(index + 1)}
                 key={index}
                 className={`pagination-item mx-3 border-2 p-2 border-slate-400 cursor-pointer ${
                   currentPage === index + 1 ? "bg-indigo-200" : ""
@@ -158,7 +177,7 @@ const Blogs: FunctionComponent<BlogsProps> = () => {
                   onClick={() => handlePageChange(index + 1)}
                   className="pagination-link"
                 > */}
-                  {index + 1}
+                {index + 1}
                 {/* </button> */}
               </li>
             ))}

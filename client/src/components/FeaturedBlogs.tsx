@@ -1,6 +1,6 @@
 import { FunctionComponent, useRef, useState } from "react";
 import "./Blogs.css";
-import smoothScrollTo from '@/customHooks/useScrollTo.js'
+import smoothScrollTo from '@/composables/useScrollTo.js'
 import { Container } from "react-dom";
 
 const featuredBlogs = [
