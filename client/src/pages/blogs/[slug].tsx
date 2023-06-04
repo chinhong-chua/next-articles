@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import ReactMarkdown from "react-markdown";
-import gfm from "remark-gfm";
+// import gfm from "remark-gfm";
 
 interface BlogDetailsProps {}
 
@@ -90,7 +90,11 @@ const BlogDetailsPage: React.FC<BlogDetailsProps> = () => {
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-4">{blog.title}</h1>
       <div className="prose">
-        <ReactMarkdown plugins={[gfm]} children={blog.content} />
+        {/* <ReactMarkdown plugins={[gfm]} children={blog.content} /> */}
+        <ReactMarkdown >
+        {blog.content}
+        </ReactMarkdown>
+
       </div>
       <p className="mt-4">Author: {blog.author}</p>
     </div>

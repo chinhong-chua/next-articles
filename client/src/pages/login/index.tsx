@@ -76,7 +76,7 @@ const LoginPage: FunctionComponent<LoginPageProps> = () => {
 
             <div className="mt-6 flex items-center justify-center">
               <div className="text-sm leading-5">
-                Don't have an account?{" "}
+                {`Don't have an account? `}
                 <Link
                   href="/login/register-page"
                   className="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150"
