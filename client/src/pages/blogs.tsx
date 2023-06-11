@@ -133,7 +133,7 @@ const Blogs: FunctionComponent<BlogsProps> = () => {
             className="relative bg-gray-900 rounded-md overflow-hidden"
           >
             <img
-              src={blog.imagePath}
+              src={blog.imagePath || '/notFound.png'}
               alt={blog.title}
               className="w-full h-full object-cover blur-sm"
             />
