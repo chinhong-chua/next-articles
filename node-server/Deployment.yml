@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-blog
+spec:
+  selector:
+    matchLabels:
+      app: node-blog
+  template:
+    metadata:
+      labels:
+        app: node-blog
+    spec:
+      containers:
+      - name: node-blog
+        image: <Image>
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "250m"
+        ports:
+        - containerPort: 8011
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: node-blog
+spec:
+  type: LoadBalancer
+  selector:
+    app: node-blog
+  ports:
+  - port: 3011
+    targetPort: 8011
+
